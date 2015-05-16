@@ -90,27 +90,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KEYMAP(  // layer 0 : default
         // left hand
-        ESC, F1,   F2,   F3,   F4,  F5,   F6,
+        LGUI, F1,   F2,   F3,   F4,  F5,   F6,
         TAB, QUOT, COMM, DOT,  P,   Y,   SPC,
         LCTL, A,   O,   E,   U,   I,
-        FN2, SCLN,   Q,   J,   K,   X,   SPC,
+        FN1, FN17,   Q,   J,   K,   X,   SPC,
         LGUI,SPC, SPC, SPC, LALT,
                                       VOLD, VOLU,
                                            MUTE,
-                                 LSFT, FN1, FN3,
+                                 LSFT, FN2, FN3,
 
         // right hand
              F7, F8,   F9,   F10,   F11,   F12,   ESC,
-             ENT, F,   G,   C,   R,   L,   SLSH,
+             FN17, F,   G,   C,   R,   L,   SLSH,
                   D,   H,   T,   N,   S, MINUS,
-             ENT, B,   M,   W, V, Z, RSFT,
+             FN20, B,   M,   W, V, Z, CAPSLOCK,
                        BSPACE, DELETE, LEFT, RGHT,RGUI,
         MPRV,MNXT,
         MPLY,
-        DEL,ENT, SPC
+        ESC,ENT, SPC
     ),
 
-    KEYMAP(  // layer 1 : symbol keys
+
+    KEYMAP(  // layer 1 : number pad 
+        // left hand
+        TRNS, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,TRNS,TRNS,TRNS,
+                                      TRNS,TRNS,
+                                           TRNS,
+                                 TRNS,TRNS,TRNS,
+        // right hand
+             TRNS, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+             TRNS,FN15,1,2,3,FN16,TRNS,
+                  FN21,4,5,6,0,TRNS,
+             TRNS,FN18,7,8,9,FN19,TRNS,
+                       TRNS,TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,
+        TRNS,
+        TRNS,TRNS,TRNS
+    ),
+
+    KEYMAP(  // layer 2 : symbol keys
         // left hand
         TRNS,TRNS, TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
@@ -124,28 +146,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, TRNS,
              TRNS, FN4, FN5,FN6,FN7,FN8,BSLS,
                   FN9,FN10,FN11, EQL,SCLN,FN12,
-             TRNS,GRV,LBRC,RBRC,FN13,FN14,TRNS,
-                       TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,
-        TRNS,
-        TRNS,TRNS,TRNS
-    ),
-
-    KEYMAP(  // layer 2 : number pad 
-        // left hand
-        TRNS, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-        TRNS,TRNS,TRNS,TRNS,TRNS,
-                                      TRNS,TRNS,
-                                           TRNS,
-                                 TRNS,TRNS,TRNS,
-        // right hand
-             TRNS, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-             TRNS,FN15,1,2,3,FN16,TRNS,
-                  PPLS,4,5,6,0,FN17,
-             TRNS,FN18,7,8,9,FN19,TRNS,
+             TRNS,GRV,LBRC,RBRC,FN13,FN19,TRNS,
                        TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,
         TRNS,
@@ -187,7 +188,7 @@ static const uint16_t PROGMEM fn_actions[] = {
     ACTION_FUNCTION(TEENSY_KEY),                    // FN0 - Teensy key
     ACTION_LAYER_MOMENTARY(1),                      // FN1 - switch to Layer1
     ACTION_LAYER_MOMENTARY(2),                      // FN2 - switch to Layer2
-    ACTION_LAYER_MOMENTARY(3),                      // FN3 - switch to Layer2
+    ACTION_LAYER_MOMENTARY(3),                      // FN3 - switch to Layer3
     ACTION_MODS_KEY(MOD_LSFT, KC_GRAVE),            // FN4 - Tilde
     ACTION_MODS_KEY(MOD_LSFT, KC_LBRACKET),         // FN5 - {
     ACTION_MODS_KEY(MOD_LSFT, KC_RBRACKET),         // FN6 - }
@@ -204,6 +205,8 @@ static const uint16_t PROGMEM fn_actions[] = {
     ACTION_MODS_KEY(MOD_LSFT, KC_BSLS),             // FN17 - |
     ACTION_MODS_KEY(MOD_LSFT, KC_8),                // FN18 - *
     ACTION_MODS_KEY(MOD_LSFT, KC_1),                // FN19 - !
+    ACTION_LAYER_TOGGLE(1),                         // FN20 - toggle numpad
+    ACTION_MODS_KEY(MOD_LSFT, KC_EQUAL),            // FN21 - plus
 
 };
 
