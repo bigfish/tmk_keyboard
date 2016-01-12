@@ -90,24 +90,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KEYMAP(  // layer 0 : default
         // left hand
-        LGUI, F1,   F2,   F3,   F4,  F5,   F6,
+        ESC, F1,   F2,   F3,   F4,  F5,   F6,
         TAB, QUOT, COMM, DOT,  P,   Y,   SPC,
         LCTL, A,   O,   E,   U,   I,
-        FN1, FN17,   Q,   J,   K,   X,   SPC,
-        LGUI,SPC, SPC, SPC, LALT,
+        FN1, FN3,   Q,   J,   K,   X,   FN23,
+        LGUI,SPC, SPC, LALT, LGUI,
                                       VOLD, VOLU,
                                            MUTE,
-                                 LSFT, FN2, FN3,
-
+                                 LSFT, FN2, ESC,
+     
         // right hand
              F7, F8,   F9,   F10,   F11,   F12,   ESC,
              FN17, F,   G,   C,   R,   L,   SLSH,
                   D,   H,   T,   N,   S, MINUS,
-             FN20, B,   M,   W, V, Z, CAPSLOCK,
-                       BSPACE, DELETE, LEFT, RGHT,RGUI,
-        MPRV,MNXT,
-        MPLY,
-        ESC,ENT, SPC
+             FN20, B,   M,   W, V, Z, CAPS,
+                       BSPACE, DELETE, LEFT, RGHT,ESC,
+                                MPRV, MNXT,
+                                MPLY,
+                                DEL, ENT, SPC
     ),
 
 
@@ -125,7 +125,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              TRNS, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
              TRNS,FN15,1,2,3,FN16,TRNS,
                   FN21,4,5,6,0,TRNS,
-             TRNS,FN18,7,8,9,FN19,TRNS,
+             TRNS,FN18,7,8,9,FN17,TRNS,
                        TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,
         TRNS,
@@ -186,9 +186,12 @@ enum function_id {
  */
 static const uint16_t PROGMEM fn_actions[] = {
     ACTION_FUNCTION(TEENSY_KEY),                    // FN0 - Teensy key
-    ACTION_LAYER_MOMENTARY(1),                      // FN1 - switch to Layer1
-    ACTION_LAYER_MOMENTARY(2),                      // FN2 - switch to Layer2
-    ACTION_LAYER_MOMENTARY(3),                      // FN3 - switch to Layer3
+    /*ACTION_LAYER_MOMENTARY(1),                      // FN1 - switch to Layer1*/
+    ACTION_FUNCTION(1),                             //  layer shift 1 + turnon led
+    /*ACTION_LAYER_MOMENTARY(2),                      // FN2 - switch to Layer2*/
+    ACTION_FUNCTION(2),                             //  layer shift 2 + turnon led
+    /*ACTION_LAYER_MOMENTARY(3),                      // FN3 - switch to Layer3*/
+    ACTION_FUNCTION(3),                             //  layer shift 3 + turnon led
     ACTION_MODS_KEY(MOD_LSFT, KC_GRAVE),            // FN4 - Tilde
     ACTION_MODS_KEY(MOD_LSFT, KC_LBRACKET),         // FN5 - {
     ACTION_MODS_KEY(MOD_LSFT, KC_RBRACKET),         // FN6 - }
@@ -207,17 +210,56 @@ static const uint16_t PROGMEM fn_actions[] = {
     ACTION_MODS_KEY(MOD_LSFT, KC_1),                // FN19 - !
     ACTION_LAYER_TOGGLE(1),                         // FN20 - toggle numpad
     ACTION_MODS_KEY(MOD_LSFT, KC_EQUAL),            // FN21 - plus
+    ACTION_FUNCTION(4),                             // FN22 all LED,
+    ACTION_MODS_KEY(MOD_LCTL,KC_A),                 // FN23 Ctrl-A (tmux)
 
 };
 
+/*handle layer toggle actions and light up LEDs*/
 void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
 {
-    if (id == TEENSY_KEY) {
-        clear_keyboard();
-        print("\n\nJump to bootloader... ");
-        _delay_ms(250);
-        bootloader_jump(); // should not return
-        print("not supported.\n");
+    /*if (id == TEENSY_KEY) {*/
+        /*clear_keyboard();*/
+        /*print("\n\nJump to bootloader... ");*/
+        /*_delay_ms(250);*/
+        /*bootloader_jump(); // should not return*/
+        /*print("not supported.\n");*/
+    /*}*/
+    switch (id) {
+        case 1:
+            if (event->event.pressed) {
+                ergodox_right_led_1_on();
+                layer_on(1);
+            } else {
+                ergodox_right_led_1_off();
+                layer_off(1);
+            }
+            break;
+        case 2:
+            if (event->event.pressed) {
+                ergodox_right_led_2_on();
+                layer_on(2);
+            } else {
+                ergodox_right_led_2_off();
+                layer_off(2);
+            }
+            break;
+        case 3:
+            if (event->event.pressed) {
+                ergodox_right_led_3_on();
+                layer_on(3);
+            } else {
+                ergodox_right_led_3_off();
+                layer_off(3);
+            }
+            break;
+        case 4:
+            if (event->event.pressed) {
+                ergodox_led_all_on();
+            } else {
+                ergodox_led_all_off();
+            }
+            break;
     }
 }
 
