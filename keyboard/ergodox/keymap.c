@@ -90,14 +90,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KEYMAP(  // layer 0 : default
         // left hand
-        ESC, F1,   F2,   F3,   F4,  F5,   F6,
-        TAB, QUOT, COMM, DOT,  P,   Y,   SPC,
+        FN24, F1,   F2,   F3,   F4,  F5,   F6,
+        ESC, QUOT, COMM, DOT,  P,   Y,   SPC,
         LCTL, A,   O,   E,   U,   I,
         FN1, FN3,   Q,   J,   K,   X,   FN23,
         LGUI,SPC, SPC, LALT, LGUI,
                                       VOLD, VOLU,
                                            MUTE,
-                                 LSFT, FN2, ESC,
+                                 LSFT, FN2, FN23,
      
         // right hand
              F7, F8,   F9,   F10,   F11,   F12,   ESC,
@@ -107,7 +107,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                        BSPACE, DELETE, LEFT, RGHT,ESC,
                                 MPRV, MNXT,
                                 MPLY,
-                                DEL, ENT, SPC
+                                TAB, ENT, SPC
     ),
 
 
@@ -174,6 +174,26 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TRNS,TRNS,TRNS
     ),
 
+    KEYMAP(  // layer 4: qwerty!
+        // left hand
+        FN24,    1,   2,   3,   4,   5,   6,
+        TAB  ,Q  ,   W,   E,   R,   T,   TRNS,
+        CAPS,   A,   S,   D,   F,   G,
+        LSFT,   Z,   X,   C,   V,   B,  TRNS,
+        LCTL,TRNS,TRNS,TRNS,TRNS,
+                                      TRNS,TRNS,
+                                           TRNS,
+                                 TRNS,TRNS,TRNS,
+        // right hand
+             7   ,   8,     9,    0,   MINUS,  EQL,BSPACE,
+                TRNS,   Y,     U,     I,  O,  P, TRNS,
+                  H,  J,  K,  L, SCLN,TRNS,  
+             TRNS, N,  M, COMM , DOT, SLSH, TRNS,
+                       TRNS,  TRNS,TRNS,TRNS,TRNS,
+        TRNS,TRNS,
+        TRNS,
+        TRNS,TRNS,TRNS
+    ),
 };
 
 /* id for user defined functions */
@@ -211,7 +231,8 @@ static const uint16_t PROGMEM fn_actions[] = {
     ACTION_LAYER_TOGGLE(1),                         // FN20 - toggle numpad
     ACTION_MODS_KEY(MOD_LSFT, KC_EQUAL),            // FN21 - plus
     ACTION_FUNCTION(4),                             // FN22 all LED,
-    ACTION_MODS_KEY(MOD_LCTL,KC_A),                 // FN23 Ctrl-A (tmux)
+    ACTION_MODS_KEY(MOD_LCTL,KC_O),                 // FN23 Ctrl-O (tmux)
+    ACTION_LAYER_TOGGLE(4),                         // FN24 layer toggle 4
 
 };
 
